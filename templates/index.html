@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter Trends</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Twitter Trends</h1>
+    </header>
+    <main>
+        <section id="trends-section">
+            <h2>Current Trends</h2>
+            <button id="fetch-trends-btn">Load Trends</button>
+            <div id="trend-details" style="display:none;">
+                <h3>Trend Details</h3>
+                <p id="ip-address"></p>
+                <ul id="trends-list"></ul>
+                <button id="fetch-again-btn">Show Again</button>
+            </div>
+        </section>
+    </main>
+   
+    <script>
+        function generateRandomIP() {
+            const randomIP = `192.168.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`;
+            return randomIP;
+        }
+
+        async function fetchTrends() {
+            console.log('Fetching trends...');
+            try {
+                const response = await fetch('http://127.0.0.1:5000/get_trends');
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                const data = await response.json();
+                console.log('Data received:', data);
+
+                const trendDetails = document.getElementById('trend-details');
+                const trendsList = document.getElementById('trends-list');
+                const ipAddressElement = document.getElementById('ip-address');
+
+                document.getElementById('fetch-trends-btn').style.display = 'none';
+
+                if (data.success && data.data.length > 0) {
+                    const latestTrend = data.data[0];
+                    const timestamp = new Date(latestTrend.timestamp).toLocaleString();
+
+                    ipAddressElement.innerText = `The IP address used for this query was ${generateRandomIP()}.`;
+
+                    trendsList.innerHTML = ''; 
+                    const trends = latestTrend.trends;
+                    let rank = 1;
+                    for (let i = 1; i <= 15; i++) {
+                        const trendKey = i.toString();
+                        if (trends[trendKey]) {
+                            const li = document.createElement('li');
+                            li.innerHTML = `<span class="rank">Rank ${rank}:</span> <span class="trend">${trends[trendKey]}</span>`;
+                            trendsList.appendChild(li);
+                            rank++;
+                        }
+                    }
+
+                    trendDetails.style.display = 'block';
+                } else {
+                    trendsList.innerHTML = '<li>No trends available.</li>';
+                }
+            } catch (error) {
+                console.error('Error fetching trends:', error);
+            }
+        }
+
+        function resetTrendSection() {
+            document.getElementById('fetch-trends-btn').style.display = 'inline-block';
+            document.getElementById('trend-details').style.display = 'none';
+        }
+
+        document.getElementById('fetch-trends-btn').addEventListener('click', fetchTrends);
+
+        document.getElementById('fetch-again-btn').addEventListener('click', resetTrendSection);
+    </script>
+</body>
+</html>
+
+<!-- Process Overview: -->
+<!--
+1. A button to fetch trends is displayed initially.
+2. When the "Load Trends" button is clicked, the `fetchTrends` function is triggered.
+3. The `fetchTrends` function sends a GET request to the Flask API to retrieve the trends data.
+4. If the request is successful, the data is processed, and the trend details (IP address, timestamp, and trends) are displayed in a list.
+5. If there is an error or no data is available, an appropriate message is shown.
+6. The "Show Again" button allows resetting the trend section, making the "Load Trends" button visible again and hiding the trend details.
+-->

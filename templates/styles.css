@@ -1,0 +1,147 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+header {
+    background-color: #1dd6f2;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: #fff;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+#trends-section {
+    text-align: center;
+    max-width: 1000px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#trends-section h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+#fetch-trends-btn {
+    background-color: #85b0ca;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+#fetch-trends-btn:hover {
+    background-color: #0a85d9;
+}
+
+#trend-details {
+    text-align: left;
+    background-color: #222;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 800px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+#trends-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+#trends-list li {
+    background-color: #333;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.rank {
+    font-weight: bold;
+    color: #ff6347;
+    margin-right: 10px;
+    font-size: 1.1rem;
+}
+
+.trend {
+    font-weight: bold;
+    color: #1da1f2;
+}
+
+#fetch-again-btn {
+    background-color: #ff6347;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+    width: 200px;
+}
+
+#fetch-again-btn:hover {
+    background-color: #ff4500;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    #trends-section h2 {
+        font-size: 1.25rem;
+    }
+
+    #fetch-trends-btn {
+        font-size: 0.875rem;
+        padding: 8px 16px;
+    }
+
+    #trends-list li {
+        font-size: 0.875rem;
+    }
+
+    #trend-details {
+        width: 90%;
+    }
+}
